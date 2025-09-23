@@ -12,3 +12,9 @@ Ensure:
     Book calender
     Joined the disord server
     
+Agenda:
+        Designing online/offline indicator
+        How to approach system Design
+        Designing a multi user blogging platform
+            Database
+            Caching
