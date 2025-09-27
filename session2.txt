@@ -6,3 +6,35 @@ Points to remember:
 
 Storage: 
             user (int) -> online/offline (bool)
+
+            Access: key value
+    DB: Not yet decided (We still have not picked which db to use)
+
+
+Interfacing API:
+
+        user <------> api server <-------> database
+
+        GET /status/users ? ids= u1,u2,u3,u4
+            userids for whom status need to be fixed
+
+updating db:
+
+    push based model: user push their status periodically
+
+Our api server cann't pull from client because we can't proactively talk to
+client. * useless there is a persistent connection.
+
+Post / heartbeat -> the authenticated user will be marked as alive.
+
+  user ........... API
+
+Note: if user is online then mark online if user logout or not in app then 
+      mark user is offline, what happen if system is crash if user was online
+      it will consider always online but he is not to handle this scnaio the
+      solution is below.
+
+so When is user offline?
+    When we did not receive heartbeat for long enough.
+
+Note 
