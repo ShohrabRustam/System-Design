@@ -1,0 +1,23 @@
+Online Online indicator
+
+Note: Since it is day 1 , we keep thing simple and do not put a lots of 
+        of focus on scaling.
+
+We have lots of time to talk about scaling.
+
+Approch System Design:
+
+Spiral System:  building component as need
+    Decide the core
+    build your system around
+
+Incremental building : 
+        When we are unsure how to build and how to scale.
+    Start with a day zero architecture
+    Observe how each component would behave
+        - under Load
+        - at scale
+    
+    Identify the bottleneck
+    re-rechitect 
+    repeat 
