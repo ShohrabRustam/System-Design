@@ -1,0 +1,4 @@
+Points to remember:
+    - Understand the core property & access pattern 
+    - Affinity towards a tech comes second.
+    - Build an intuition towards building system.
