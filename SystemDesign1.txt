@@ -1,0 +1,80 @@
+Problem : Find a user is online/offline?
+
+Requirements
+    Track when a user comes online (login, app open, websocket connect, etc.).
+
+    Track when a user goes offline (logout, app close, websocket disconnect, timeout).
+
+    Provide an API → GET /user/{id}/status → returns ONLINE or OFFLINE.
+
+    Support real-time updates (e.g., friends list showing live status).
+
+
+Components
+
+    Client Applications (Mobile/Web/Desktop)
+
+    Sends heartbeat / connect & disconnect events.
+
+    Uses WebSockets or long polling to maintain live connection.
+
+    Gateway / Load Balancer
+
+    Routes user connections to backend services.
+
+Presence Service
+
+    Core microservice that handles online/offline events.
+
+    Updates user’s status in a fast in-memory store (Redis).
+    Key: userId  
+    Value: {status: ONLINE, lastSeen: timestamp}  
+    TTL: e.g., 1 min → auto-expiry if no heartbeat
+
+
+Lets Estimate the scale 
+
+    100 users -> 100 entires
+    1000 users -> 1000 entires
+    1M users -> 1M entires
+    1B users -> 1B entires
+
+Each entry has 2 column
+    userid int 4(GB), last-heartbeat int 4(GB)
+
+    size of each entry is 8GB.
+
+Total storage required for 1B entries = 8 GB
+
+can we do better on storage ?
+    Requirements : 
+                    user1 
+                    user2
+                    user3 
+
+What if absence == offline
+    Idea: if user not present in db we return offline.
+
+So lets expire the entries of 30 second
+    delete
+
+if we delete entries -> we save a bunch of space by not storing data of inactive users.
+
+Total entries = Active users
+
+So lets expire the entries after 30 seconds
+
+if we delete the entries -> wess save bunch of space by not store data of inactive users.
+
+Total entries = Active users
+
+if 1B total ysers and look active then total entries = look total size ~~ 800KB.
+
+How to auto delete?
+
+    Approach1 : write cron job that delete expired entries.
+            - not robust solution
+            -we need to handle edge case in business logic
+
+    Approach2 : Can we not offload this to our datastore ?
+                
